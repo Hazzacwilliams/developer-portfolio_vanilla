@@ -1,0 +1,159 @@
+:root {
+    --brand-purple: rgb(75, 0, 75);
+    --brand-black: rgb(0, 0, 0);
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    cursor: none;
+}
+
+body {
+    font-family: "Josefin Sans", sans-serif;
+    background: #01084f;
+}
+
+.custom-cursor {
+    height: 30px;
+    width: 30px;
+    border-radius: 100px;
+    border: 2px solid white;
+    z-index: 9999;
+    position: fixed;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    background: red;
+    transform: translate(-50%, -50%);
+}
+
+
+.portfolio__container {
+    height: auto;
+    display: flex;
+    min-width: 100vw;
+}
+
+.portfolio__container--elements {
+    min-height: 100vh;
+    min-width: 90vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.section {
+    height: 100vh;
+    scroll-snap-align: start;
+}
+
+.portfolio__container--scroller {
+    position: fixed;
+    right: 20px;
+    top: 40%;
+    height: 20vh;
+    width: 40px;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.portfolio__container--circle {
+    border: 1px solid white;
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    position: relative;
+}
+
+.portfolio__container--circle.active {
+    height: 20px;
+    width: 20px;
+    background: white;
+}
+
+.portfolio__container--circle:hover::after {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: calc(100% + 12px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.4rem 0.75rem;
+    height: auto;
+    min-width: 4rem;
+
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #01084f;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+
+    content: attr(id);
+}
+
+
+.portfolio__container--circle:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-4px);
+}
+
+
+
+
+
+.background-dot__wrapper {
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    position: fixed;
+    overflow: hidden;
+}
+
+.background-dot {
+    width: 8px;
+    height: 8px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border-radius: 50%;
+    position: absolute;
+    animation: fallingdot auto linear;
+    z-index: 1;
+}
+
+@keyframes fallingdot {
+    from {
+        transform: translateY(-10vh);
+    }
+
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+::-webkit-scrollbar {
+    visibility: hidden;
+}

@@ -1,0 +1,280 @@
+#aboutme-section {
+    height: 100vh;
+    width: 100%;
+    color: white;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+
+    scroll-snap-align: center;
+}
+
+.aboutme__text {
+    height: 100%;
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.aboutme__text-header {
+    font-size: 50px;
+    position: relative;
+    animation: moveleft auto linear;
+    animation-timeline: scroll();
+    animation-range: entry 0% cover 25%;
+
+}
+
+.aboutme__text-paragraph {
+    font-size: 20px;
+    line-height: 40px;
+    position: relative;
+    text-align: center;
+}
+
+#para1 {
+    animation: moveright auto linear;
+    animation-timeline: scroll();
+    animation-range: entry 0% cover 25%;
+}
+
+#para2 {
+    animation: moveleft auto linear;
+    animation-timeline: scroll();
+    animation-range: entry 0% cover 25%;
+}
+
+#para3 {
+    animation: moveright auto linear;
+    animation-timeline: scroll();
+    animation-range: entry 0% cover 25%;
+}
+
+@keyframes moveleft {
+    from {
+        opacity: 0;
+        left: 200px;
+    }
+
+    to {
+        opacity: 1;
+        left: 0;
+    }
+}
+
+@keyframes moveright {
+    from {
+        opacity: 0;
+        left: -200px;
+    }
+
+    to {
+        opacity: 1;
+        left: 0;
+    }
+}
+
+.aboutme__downloads {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    width: 80%;
+    overflow-x: scroll;
+    padding: 5px;
+    gap: 1rem;
+}
+
+.aboutme__downloads,
+.aboutme__downloads-cards {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+}
+
+.aboutme__downloads::-webkit-scrollbar,
+.aboutme__downloads-cards::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+}
+
+.aboutme__downloads-cards {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    width: 40%;
+    height: 80%;
+    border-radius: 10px;
+    padding: 0.5rem;
+    gap: 1rem;
+}
+
+.aboutme__downloads-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.aboutme__downloads-img {
+    width: 40px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.flashingline {
+    width: 0;
+    height: 20px;
+    border: 2px solid white;
+    animation: lineflash 1s ease-in-out infinite;
+
+    display: inline-block;
+    margin-left: 0.25rem;
+    vertical-align: text-bottom;
+
+}
+
+@keyframes lineflash {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    50.1%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.aboutme__downloads-button {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    min-width: 100%;
+    min-height: 100%;
+    border-radius: 10px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: white;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.aboutme__downloads-button:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    border-color: rgb(40, 40, 150);
+}
+
+.aboutme__downloads-arrow-container {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+}
+
+.aboutme__downloads-arrow-container:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    border-color: rgb(40, 40, 150);
+}
+
+.aboutme__downloads-arrow-img {
+    width: 25px;
+    height: auto;
+    position: relative;
+    top: 20%;
+    left: 20%;
+}
+
+#leftarrow {
+    transform: rotate(180deg);
+}
+
+.aboutme__photo {
+    width: 30%;
+    height: 100%;
+    position: relative;
+    top: 25%;
+}
+
+.aboutme__photo-img {
+    width: 60%;
+    height: auto;
+    border-radius: 50px;
+    animation: photospin auto linear;
+    animation-timeline: scroll();
+    animation-range: entry 0% cover 25%;
+    border: 3px solid ghostwhite;
+}
+
+@keyframes photospin {
+    0% {
+        transform: scale(0) rotateZ(0deg);
+    }
+
+    100% {
+        transform: scale(1) rotateZ(365deg);
+    }
+}
+
+.aboutme__filepreview-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.hidden {
+    display: none;
+}
+
+.aboutme__filepreview-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+}
+
+.aboutme__filepreview-embed {
+    width: 100%;
+    height: 90%;
+    border: none;
+    border-radius: 8px;
+    background: white;
+}
+
+.aboutme__filepreview-download {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #2a5298;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}

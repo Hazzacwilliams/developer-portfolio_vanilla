@@ -1,0 +1,32 @@
+projects {
+    color: white;
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    scroll-snap-align: center;
+}
+
+.projects__card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 80%;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+
+    border: 0.25rem solid white;
+    border-radius: 10px;
+
+    backdrop-filter: blur(5px);
+}
+
+.projects__card:hover {
+    transform: scale(1.1);
+}

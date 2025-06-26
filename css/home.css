@@ -1,0 +1,64 @@
+home {
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    scroll-snap-align: center;
+}
+
+.about-me__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.about-me__header {
+    font-size: 40px;
+    display: inline-block;
+    animation: textflow 1s 1s ease forwards;
+    visibility: hidden;
+}
+
+.about-me__paragraph {
+    display: inline-block;
+    animation: textflow 1s 1.5s ease forwards;
+    visibility: hidden;
+}
+
+.about-me__welcome {
+    display: inline-block;
+    animation: textflow 1s 2s ease forwards;
+    visibility: hidden;
+}
+
+.about-me__wave {
+    animation: wave 1s infinite;
+    transform-origin: 70% 70%;
+    display: inline-block;
+}
+
+@keyframes wave {
+    0% {transform: rotate(-10deg);}
+    50% {transform: rotate(60deg);}
+    100% {transform: rotate(-10deg);}
+    
+}
+
+@keyframes textflow {
+    from {
+        transform: translateX(-50%); 
+        visibility: hidden;
+    }
+    to {
+        transform: translateX(0); 
+        visibility: visible;
+    }
+}
+
+p {
+    font-size: 20px;
+}
