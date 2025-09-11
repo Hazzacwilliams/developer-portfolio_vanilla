@@ -117,10 +117,6 @@ body {
     transform: translateY(-50%) translateX(-4px);
 }
 
-
-
-
-
 .background-dot__wrapper {
     z-index: 1;
     height: 100vh;
@@ -156,4 +152,53 @@ body {
 
 ::-webkit-scrollbar {
     visibility: hidden;
+}
+
+.contactbuttons__container {
+    position: fixed;
+    width: fit-content;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 20;
+    transition:
+        top 0.6s ease,
+        left 0.6s ease,
+        transform 0.6s ease;
+}
+
+.contactbuttons__container img {
+    width: 25px;
+    height: auto;
+}
+
+.contactbuttons__container.in-contact {
+    top: auto;
+    left: 50vw;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    gap: 1rem;
+}
+
+.contactbuttons__container.in-contact img {
+    max-width: 50px;
+    height: auto;
+}
+
+@media (max-width: 1000px) {
+    .contactbuttons__container.in-contact img {
+        max-width: 30px;;
+    }
+
+    .contactbuttons__container.in-contact {
+        bottom: .1rem !important;
+        height: fit-content;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-cursor {
+        visibility: hidden;
+    }
 }

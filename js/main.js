@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadComponent('home', '.portfolio__container--elements', 'beforeend');
     await loadComponent('aboutme', '.portfolio__container--elements', 'beforeend');
     await loadComponent('projects', '.portfolio__container--elements', 'beforeend');
-    await loadComponent('skills', '.portfolio__container--elements', 'beforeend');
+    //await loadComponent('skills', '.portfolio__container--elements', 'beforeend');
     await loadComponent('contact', '.portfolio__container--elements', 'beforeend');
 
     //Creates custom cursor
@@ -73,6 +73,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         observer.observe(section);
     });
 
+    const icons = document.querySelector('.contactbuttons__container');
+
+    const iconObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                icons.classList.add('in-contact');
+            } else {
+                icons.classList.remove('in-contact');
+            }
+        });
+    }, { threshold: 0.5 });
+
+    iconObserver.observe(document.getElementById('contact-section'));
+
     scrollItems.forEach((item) => {
         item.addEventListener('click', (e) => {
             const section = document.getElementById(`${e.target.id}-section`);
@@ -139,36 +153,88 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const projects = {
         project1: {
-            name: "To-Do App",
+            name: "ToDoApp",
             description: "A To-Do List App, implementing localStorage persistence, drag & drop functionality and animated feedback.",
-            link: "https://harry-todo.netlify.app/"
+            skills: ['JavaScript', 'HTML5', 'CSS3', 'Netlify'],
+            image: './assets/todoapp.png'
         },
         project2: {
             name: "DevNest",
             description: "A Full-Stack app designed as a social media website; using React, Express and PostgreSQL.",
-            link: "https://devnest-frontend.onrender.com/"
+            skills: ['React', 'Redux', 'JavaScript', 'CSS3', 'Component Based Architecture', 'Express.js', 'PostgreSQL', 'GitHub', 'Render'],
+            image: './assets/devnest.png'
         },
     };
 
     Object.values(projects).forEach((project) => {
-        const projectCard = document.createElement('div');
+        const projectCard = document.createElement('div'); //Card that will hold all details of the project
         projectCard.classList.add('projects__card');
+
+        const projectCardText = document.createElement('div'); //Div for holding text info on project
+        projectCardText.classList.add('projects__card-textcontainer');
+        const projectCardSkills = document.createElement('div');
+        projectCardSkills.classList.add('projects__card-skillcontainer'); //Div for holding project skills
+        const projectCardImg = document.createElement('div');
+        projectCardImg.classList.add('projects__card-imgcontainer'); //Div for holding img of project
 
         const cardTitle = document.createElement('h3');
         const cardDesc = document.createElement('p');
-        const cardLink = document.createElement('a');
+
+        const cardImg = document.createElement('img');
+
+        cardTitle.classList.add('projects__card-title');
+        cardDesc.classList.add('projects__card-desc');
+        cardImg.classList.add('projects__card-img');
 
         cardTitle.innerHTML = project.name;
         cardDesc.innerHTML = project.description;
-        cardLink.href = project.link;
-        cardLink.innerHTML = "View Project →";
-        cardLink.target = "_blank";
 
-        projectCard.appendChild(cardTitle);
-        projectCard.appendChild(cardDesc);
-        projectCard.appendChild(cardLink);
+        const track = document.createElement('div'); //Track for marquee animation
+        track.classList.add('projects__card-skilltrack');
+
+        project.skills.forEach(skill => {   //Appends all skills to the track
+            const cardSkill = document.createElement('h4');
+            cardSkill.classList.add('projects__card-skill');
+            cardSkill.innerHTML = skill;
+            track.appendChild(cardSkill);
+        });
+
+        track.innerHTML += track.innerHTML; //Duplicates skills for animation
+
+        projectCardSkills.appendChild(track); //Appends the track to the skills div
+
+        cardImg.src = project.image;
+        cardImg.alt = `Screenshot of ${project.name}`;
+
+        cardImg.setAttribute('id', project.name);
+
+        projectCardText.appendChild(cardTitle);
+        projectCardText.appendChild(cardDesc);
+        projectCardText.appendChild(projectCardSkills);
+        projectCardImg.appendChild(cardImg);
+
+        projectCard.appendChild(projectCardText);
+        projectCard.appendChild(projectCardImg);
 
         projectPage.appendChild(projectCard);
+    });
+
+    document.querySelectorAll('.projects__card-imgcontainer').forEach(proj => {
+        proj.addEventListener('click', (e) => {
+            switch (e.target.id) {
+                case 'ToDoApp':
+                    window.open("https://harry-todo.netlify.app/");
+                    break;
+                case 'DevNest':
+                    window.open("https://devnest-frontend.onrender.com/");
+                    break;
+            }
+
+        })
     })
+
+    //Skills
+    const skills = ['JavaScript', 'HTML5', 'CSS3', 'Node.js', 'Express', 'React', 'GitHub', 'PostgreSQL', 'AWS'];
+
 
 });

@@ -278,3 +278,36 @@
     text-decoration: none;
     border-radius: 5px;
 }
+
+@media (max-width: 1000px) {
+    .aboutme__text-paragraph {
+        font-size: 15px;
+        line-height: 30px;
+    }
+
+    .aboutme__text-header {
+        font-size: 30px;
+    }
+
+    .aboutme__downloads-button h3 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    #aboutme-section {
+        flex-direction: column-reverse;
+        justify-content: center;
+    }
+    .aboutme__text {
+        width: 100%;
+    }
+    .aboutme__photo {
+        top: 10%;
+        display: none;
+    }
+    .aboutme__photo-img {
+        border-radius: 0%;
+        border: none;
+    }
+}

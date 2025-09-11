@@ -62,3 +62,10 @@ home {
 p {
     font-size: 20px;
 }
+
+@media (max-width: 768px) {
+    .about-me__paragraph {
+        font-size: medium;
+        text-align: center;
+    }
+}

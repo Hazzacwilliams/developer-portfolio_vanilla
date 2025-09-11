@@ -1,3 +1,21 @@
 <contact class="section" id="contact-section" data-nav="contact">
-    <h1>CONTACT ME!</h1>
+    <h2>Let's build something together</h2>
+    <p>Whether you've got a project in mind or just want to say hi, drop me a line!</p>
+
+    <form class="contactform" name="contact" method="POST" data-netlify="true">
+        <label class="contactform__label">
+            Name
+            <input class="contactform__input" type="text" name="name" required />
+        </label>
+        <label class="contactform__label">
+            Email
+            <input class="contactform__input" type="email" name="email" required />
+        </label>
+        <label class="contactform__label">
+            Message
+            <textarea class="contactform__input" name="message" rows="6" required></textarea>
+        </label>
+        <button class="contactform__button" type="submit">Send message</button>
+    </form>
+    
 </contact>

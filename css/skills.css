@@ -9,4 +9,14 @@ skills {
     flex-direction: column;
 
     scroll-snap-align: center;
+
+    position: relative;
+    padding: 2rem 0;
+}
+
+.projects__card-skillcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }
