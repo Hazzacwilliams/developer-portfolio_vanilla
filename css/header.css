@@ -52,10 +52,20 @@
     left: 20px;
 
     visibility: hidden;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 .header__menu:hover {
     cursor: pointer;
+}
+
+.header__menu:focus-visible {
+    outline: 3px solid #4a9eff;
+    outline-offset: 2px;
+    border-radius: 4px;
 }
 
 .header__menu-line {

@@ -1,21 +1,21 @@
-<contact class="section" id="contact-section" data-nav="contact">
-    <h2>Let's build something together</h2>
+<section class="section contact" id="contact-section" data-nav="contact" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Let's build something together</h2>
     <p>Whether you've got a project in mind or just want to say hi, drop me a line!</p>
 
-    <form class="contactform" name="contact" method="POST" data-netlify="true">
-        <label class="contactform__label">
+    <form class="contactform" name="contact" method="POST" data-netlify="true" aria-label="Contact form">
+        <label class="contactform__label" for="contact-name">
             Name
-            <input class="contactform__input" type="text" name="name" required />
+            <input class="contactform__input" type="text" name="name" id="contact-name" required aria-required="true" />
         </label>
-        <label class="contactform__label">
+        <label class="contactform__label" for="contact-email">
             Email
-            <input class="contactform__input" type="email" name="email" required />
+            <input class="contactform__input" type="email" name="email" id="contact-email" required aria-required="true" />
         </label>
-        <label class="contactform__label">
+        <label class="contactform__label" for="contact-message">
             Message
-            <textarea class="contactform__input" name="message" rows="6" required></textarea>
+            <textarea class="contactform__input" name="message" id="contact-message" rows="6" required aria-required="true"></textarea>
         </label>
         <button class="contactform__button" type="submit">Send message</button>
     </form>
     
-</contact>
+</section>

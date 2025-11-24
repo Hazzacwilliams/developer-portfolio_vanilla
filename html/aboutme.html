@@ -1,6 +1,6 @@
-<aboutme class="section" id="aboutme-section" data-nav="aboutme">
+<section class="section aboutme" id="aboutme-section" data-nav="aboutme" aria-labelledby="aboutme-heading">
     <div class="aboutme__text">
-        <h2 class="aboutme__text-header">About Me</h2>
+        <h2 class="aboutme__text-header" id="aboutme-heading">About Me</h2>
         <div class="aboutme__text-paragraph" id="para1">
             I'm Harry, a full-stack developer based in the UK. I love building clean, performant web apps that solve
             real problems and create value for users.
@@ -11,35 +11,40 @@
             full-stack social media app using React, Express, and PostgreSQL.
         </div>
         <div class="aboutme__text-paragraph" id="para3">
-            When I’m not coding, I enjoy gaming, making cocktails, and hitting the gym 🏋️<div class="flashingline"></div>
+            When I'm not coding, I enjoy gaming, making cocktails, and hitting the gym <span aria-label="weight lifter emoji">🏋️</span><div class="flashingline" aria-hidden="true"></div>
         </div>
-        <div class="aboutme__downloads">
-            <div class="aboutme__downloads-arrow-container" id="leftarrowcontainer"><img src="./assets/arrow.png" alt="arrow" class="aboutme__downloads-arrow-img" id="leftarrow"/></div>
-            <div class="aboutme__downloads-cards">
-                <div class="aboutme__downloads-button" id="card1">
+        <div class="aboutme__downloads" role="region" aria-label="Downloadable documents">
+            <button class="aboutme__downloads-arrow-container" id="leftarrowcontainer" aria-label="Scroll documents left"><img src="./assets/arrow.png" alt="" class="aboutme__downloads-arrow-img" id="leftarrow" aria-hidden="true" loading="lazy" width="25" height="25"/></button>
+            <div class="aboutme__downloads-cards" role="list" aria-label="Available documents">
+                <div class="aboutme__downloads-button" id="card1" role="listitem">
                     <h3>Curriculum Vitae</h3>
                     <div class="aboutme__downloads-container">
-                        <img src="./assets/download.gif" alt="download_gif" class="aboutme__downloads-img" id="cv"/>
+                        <button class="aboutme__downloads-img-button" id="cv-download-button" aria-label="Download Curriculum Vitae PDF">
+                            <img src="./assets/download.gif" alt="" class="aboutme__downloads-img" id="cv" aria-hidden="true" loading="lazy" width="40" height="40"/>
+                        </button>
                     </div>
                     
                 </div>
-                <div class="aboutme__downloads-button" id="card2">
+                <div class="aboutme__downloads-button" id="card2" role="listitem">
                     <h3>Codecademy</h3>
                     <div class="aboutme__downloads-container">
-                        <img src="./assets/download.gif" alt="download_gif" class="aboutme__downloads-img" id="codecademy"/>
+                        <button class="aboutme__downloads-img-button" id="codecademy-download-button" aria-label="Download Codecademy certificate PDF">
+                            <img src="./assets/download.gif" alt="" class="aboutme__downloads-img" id="codecademy" aria-hidden="true" loading="lazy" width="40" height="40"/>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="aboutme__downloads-arrow-container" id="rightarrowcontainer"><img src="./assets/arrow.png" alt="arrow" class="aboutme__downloads-arrow-img" id="rightarrow"/></div>
+            <button class="aboutme__downloads-arrow-container" id="rightarrowcontainer" aria-label="Scroll documents right"><img src="./assets/arrow.png" alt="" class="aboutme__downloads-arrow-img" id="rightarrow" aria-hidden="true" loading="lazy" width="25" height="25"/></button>
         </div>
     </div>
     <div class="aboutme__photo">
-        <img class="aboutme__photo-img" src="./assets/harry_pic.jpg" alt="picture of me" />
+        <img class="aboutme__photo-img" src="./assets/harry_pic.jpg" alt="Portrait photo of Harry Williams, a full-stack developer" loading="lazy" width="300" height="300" />
     </div>
 
-    <div class="aboutme__filepreview-container hidden">
-        <button class="aboutme__filepreview-close">X</button>
-        <embed class="aboutme__filepreview-embed" type="application/pdf" />
+    <div class="aboutme__filepreview-container hidden" role="dialog" aria-modal="true" aria-labelledby="filepreview-title" aria-hidden="true">
+        <button class="aboutme__filepreview-close" aria-label="Close document preview">X</button>
+        <h3 id="filepreview-title" class="sr-only">Document Preview</h3>
+        <embed class="aboutme__filepreview-embed" type="application/pdf" aria-label="PDF document preview" />
     </div>
 
-</aboutme>
+</section>

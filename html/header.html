@@ -1,14 +1,14 @@
 <header class="header__wrapper">
-    <div class="header__menu">
-        <div class="header__menu-line" id="line1"></div>
-        <div class="header__menu-line" id="line2"></div>
-        <div class="header__menu-line" id="line3"></div>
-    </div>
-    <div class="header__tags">
-        <a><span>Home</span></a>
-        <a><span>About Me</span></a>
-        <a><span>Projects</span></a>
-        <a><span>Skills</span></a>
-        <a><span>Contact</span></a>
-    </div>
+    <button class="header__menu" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="header__tags">
+        <span class="header__menu-line" id="line1" aria-hidden="true"></span>
+        <span class="header__menu-line" id="line2" aria-hidden="true"></span>
+        <span class="header__menu-line" id="line3" aria-hidden="true"></span>
+    </button>
+    <nav class="header__tags" id="header__tags" role="navigation" aria-label="Main navigation">
+        <a href="#home-section" aria-label="Navigate to home section"><span>Home</span></a>
+        <a href="#aboutme-section" aria-label="Navigate to about me section"><span>About Me</span></a>
+        <a href="#projects-section" aria-label="Navigate to projects section"><span>Projects</span></a>
+        <a href="#skills-section" aria-label="Navigate to skills section"><span>Skills</span></a>
+        <a href="#contact-section" aria-label="Navigate to contact section"><span>Contact</span></a>
+    </nav>
 </header>

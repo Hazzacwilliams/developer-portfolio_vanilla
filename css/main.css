@@ -75,6 +75,25 @@ body {
     width: 10px;
     border-radius: 50px;
     position: relative;
+    background: transparent;
+    padding: 0;
+    margin: 0.5rem 0;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .background-dot {
+        display: none;
+    }
 }
 
 .portfolio__container--circle.active {
@@ -127,27 +146,10 @@ body {
     overflow: hidden;
 }
 
-.background-dot {
-    width: 8px;
-    height: 8px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    border-radius: 50%;
-    position: absolute;
-    animation: fallingdot auto linear;
-    z-index: 1;
-}
-
-@keyframes fallingdot {
-    from {
-        transform: translateY(-10vh);
-    }
-
-    to {
-        transform: translateY(110vh);
-    }
+.background-dot__canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -201,4 +203,67 @@ body {
     .custom-cursor {
         visibility: hidden;
     }
+}
+
+/* Accessibility: Skip to main content link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 10000;
+    border: 2px solid #fff;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Screen reader only class */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus indicators for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.portfolio__container--circle:focus-visible,
+.projects__card-imgcontainer:focus-visible {
+    outline: 3px solid #4a9eff;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* Remove default focus outline and use custom one */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+/* Ensure buttons are keyboard accessible */
+button {
+    cursor: pointer;
+}
+
+.portfolio__container--circle {
+    cursor: pointer;
+}
+
+.projects__card-imgcontainer {
+    cursor: pointer;
 }

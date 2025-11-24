@@ -1,0 +1,19 @@
+{
+  "name": "Harry's Coding Portfolio",
+  "short_name": "Harry Portfolio",
+  "description": "Portfolio website showcasing Harry Williams' full-stack development projects",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#01084f",
+  "theme_color": "#01084f",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/harry_pic.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

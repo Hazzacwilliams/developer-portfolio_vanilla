@@ -5,14 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#01084f">
     <title>Harry's Coding Portfolio</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
 
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/main.css" as="style">
+    <link rel="preload" href="js/main.js" as="script">
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/main.css" />
 
     <!-- Scripts -->
     <script type="module" src="js/main.js"></script>
-
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,29 +30,44 @@
 </head>
 
 <body>
-    <div class="custom-cursor"></div>
-    <div class="background-dot__wrapper"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="custom-cursor" aria-hidden="true"></div>
+    <div class="background-dot__wrapper" aria-hidden="true"></div>
     <div class="portfolio__container">
-        
-        <div class="portfolio__container--elements"></div>
-        <div class="portfolio__container--scroller">
-            <div class="portfolio__container--circle active" id="home"></div>
-            <div class="portfolio__container--circle" id="aboutme"></div>
-            <div class="portfolio__container--circle" id="projects"></div>
-            <div class="portfolio__container--circle" id="contact"></div>
-        </div>
+        <main id="main-content" class="portfolio__container--elements"></main>
+        <nav class="portfolio__container--scroller" aria-label="Section navigation">
+            <button class="portfolio__container--circle active" id="home" aria-label="Navigate to home section" aria-current="page"></button>
+            <button class="portfolio__container--circle" id="aboutme" aria-label="Navigate to about me section"></button>
+            <button class="portfolio__container--circle" id="projects" aria-label="Navigate to projects section"></button>
+            <button class="portfolio__container--circle" id="contact" aria-label="Navigate to contact section"></button>
+        </nav>
     </div>
-    <div class="contactbuttons__container">
-            <a href="https://www.linkedin.com/in/harry-williams-13754813b/" target="none">
-                <img src="./assets/linkedin.png" alt="linkedInIcon" />
+    <nav class="contactbuttons__container" aria-label="Social media and contact links">
+            <a href="https://www.linkedin.com/in/harry-williams-13754813b/" target="_blank" rel="noopener noreferrer" aria-label="Visit my LinkedIn profile">
+                <img src="./assets/linkedin.png" alt="LinkedIn icon" loading="lazy" width="25" height="25" />
             </a>
-            <a href="mailto:hazzacwilliams@gmail.com">
-                <img src="./assets/email.png" alt="emailicon" />
+            <a href="mailto:hazzacwilliams@gmail.com" aria-label="Send me an email">
+                <img src="./assets/email.png" alt="Email icon" loading="lazy" width="25" height="25" />
             </a>
-            <a href="https://github.com/Hazzacwilliams" target="none">
-                <img src="./assets/github.png" alt="githubIcon" />
+            <a href="https://github.com/Hazzacwilliams" target="_blank" rel="noopener noreferrer" aria-label="Visit my GitHub profile">
+                <img src="./assets/github.png" alt="GitHub icon" loading="lazy" width="25" height="25" />
             </a>
-        </div>
+        </nav>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 
 </body>
 

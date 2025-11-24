@@ -1,4 +1,5 @@
 import { loadComponent } from "./util/loadComponent.js";
+import { initBackgroundAnimation } from "./util/backgroundAnimation.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     //await loadComponent('header', 'body', 'afterbegin');
@@ -19,27 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     window.addEventListener('mousemove', moveCursor);
 
-    //Creates a rain effect background for the portfolio
-    function spawndot() {
-        const dot = document.createElement('div');
-        dot.classList.add('background-dot');
-
-        const xPos = Math.random() * 100;
-        dot.style.left = `${xPos}vw`;
-        dot.style.top = '-10px';
-
-        const duration = 8 + Math.random() * 4;
-        dot.style.animationDuration = `${duration}s`;
-
-        const randColor = [Math.random() * 255, Math.random() * 255, Math.random() * 255];
-        dot.style.background = `rgb(${randColor[0]}, ${randColor[1]}, ${randColor[2]})`
-
-        document.querySelector('.background-dot__wrapper').appendChild(dot);
-
-        setTimeout(() => dot.remove(), duration * 1000);
-    };
-
-    setInterval(spawndot, 200);
+    //Initialize canvas-based background animation for better performance
+    initBackgroundAnimation();
 
     //Sets up active states for 'scroll' buttons
     const scrollItems = document.querySelectorAll('.portfolio__container--circle');
@@ -50,11 +32,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const id = entry.target.dataset.nav;
                 document.querySelectorAll('.portfolio__container--circle').forEach((circle) => {
                     circle.classList.remove('active');
+                    circle.setAttribute('aria-current', 'false');
                 });
 
                 const activeCircle = document.getElementById(id);
                 if (activeCircle) {
                     activeCircle.classList.add('active');
+                    activeCircle.setAttribute('aria-current', 'true');
                 };
 
                 entry.target.classList.add('animate');
@@ -91,60 +75,152 @@ document.addEventListener('DOMContentLoaded', async () => {
             const section = document.getElementById(`${e.target.id}-section`);
             if (section) {
                 section.scrollIntoView({ behavior: 'smooth' });
+                // Update aria-current for active navigation
+                scrollItems.forEach((circle) => {
+                    circle.setAttribute('aria-current', 'false');
+                });
+                e.target.setAttribute('aria-current', 'true');
             }
 
-        })
+        });
+        
+        // Add keyboard support
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const section = document.getElementById(`${e.target.id}-section`);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    scrollItems.forEach((circle) => {
+                        circle.setAttribute('aria-current', 'false');
+                    });
+                    e.target.setAttribute('aria-current', 'true');
+                }
+            }
+        });
     });
 
     //Smooth scrolling for file downloads div
     const container = document.querySelector('.aboutme__downloads-cards');
-    const cardWidth = container.querySelector('.aboutme__downloads-button').offsetWidth;
+    const leftArrow = document.querySelector('#leftarrowcontainer');
+    const rightArrow = document.querySelector('#rightarrowcontainer');
+    
+    if (container && leftArrow && rightArrow) {
+        const cardWidth = container.querySelector('.aboutme__downloads-button')?.offsetWidth || 0;
 
-    document.querySelector('#leftarrowcontainer').addEventListener('click', () => {
-        container.scrollBy({
-            left: -cardWidth,
-            behavior: 'smooth'
-        });
-    });
+        const scrollLeft = () => {
+            container.scrollBy({
+                left: -cardWidth,
+                behavior: 'smooth'
+            });
+        };
 
-    document.querySelector('#rightarrowcontainer').addEventListener('click', () => {
-        container.scrollBy({
-            left: cardWidth,
-            behavior: 'smooth'
+        const scrollRight = () => {
+            container.scrollBy({
+                left: cardWidth,
+                behavior: 'smooth'
+            });
+        };
+
+        leftArrow.addEventListener('click', scrollLeft);
+        rightArrow.addEventListener('click', scrollRight);
+        
+        // Add keyboard support
+        leftArrow.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollLeft();
+            }
         });
-    });
+        
+        rightArrow.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollRight();
+            }
+        });
+    }
 
     //Open file previews for CV and Certs downloads
-    const downloadFile = document.querySelectorAll('.aboutme__downloads-img');
+    const downloadButtons = document.querySelectorAll('.aboutme__downloads-img-button');
     const previewContainer = document.querySelector('.aboutme__filepreview-container');
     const embed = document.querySelector('.aboutme__filepreview-embed');
     const closeBtn = document.querySelector('.aboutme__filepreview-close');
+    const filePreviewTitle = document.getElementById('filepreview-title');
 
-    downloadFile.forEach((download) => {
-        download.addEventListener('click', (e) => {
-            let filePath = '';
-            let fileName = '';
+    if (downloadButtons && previewContainer && embed && closeBtn) {
+        downloadButtons.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                const img = button.querySelector('img');
+                if (!img) return;
+                
+                let filePath = '';
+                let fileName = '';
 
-            if (e.target.id === 'cv') {
-                filePath = './assets/Harry CV - 2025 (Harvard).pdf';
-                fileName = 'Harry CV - 2025 (Harvard).pdf';
+                if (img.id === 'cv') {
+                    filePath = './assets/Harry CV - 2025 (Harvard).pdf';
+                    fileName = 'Harry CV - 2025 (Harvard).pdf';
+                }
+
+                if (img.id === 'codecademy') {
+                    filePath = './assets/harry_codecademy_certificate.pdf';
+                    fileName = 'harry_codecademy_certificate.pdf';
+                }
+
+                if (filePath) {
+                    // Store which button opened the preview for focus return
+                    previewContainer.dataset.lastFocusedButton = button.id;
+                    embed.src = filePath;
+                    embed.setAttribute('aria-label', `Preview of ${fileName}`);
+                    if (filePreviewTitle) {
+                        filePreviewTitle.textContent = `Preview: ${fileName}`;
+                    }
+                    previewContainer.classList.remove('hidden');
+                    previewContainer.setAttribute('aria-hidden', 'false');
+                    // Prevent body scroll when dialog is open
+                    document.body.style.overflow = 'hidden';
+                    // Focus the close button for keyboard users
+                    setTimeout(() => closeBtn.focus(), 100);
+                }
+            });
+        });
+
+        const closePreview = () => {
+            previewContainer.classList.add('hidden');
+            previewContainer.setAttribute('aria-hidden', 'true');
+            // Restore body scroll
+            document.body.style.overflow = '';
+            // Return focus to the button that opened the preview
+            const lastFocusedButton = previewContainer.dataset.lastFocusedButton;
+            if (lastFocusedButton) {
+                const button = document.querySelector(`#${lastFocusedButton}`);
+                if (button) button.focus();
             }
+        };
 
-            if (e.target.id === 'codecademy') {
-                filePath = './assets/harry_codecademy_certificate.pdf';
-                fileName = 'harry_codecademy_certificate.pdf';
+        closeBtn.addEventListener('click', closePreview);
+        
+        // Close on Escape key and trap focus within dialog
+        previewContainer.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePreview();
             }
-
-            if (filePath) {
-                embed.src = filePath;
-                previewContainer.classList.remove('hidden');
+            // Trap focus within dialog (Tab key handling)
+            if (e.key === 'Tab') {
+                const focusableElements = previewContainer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                
+                if (e.shiftKey && document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                } else if (!e.shiftKey && document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
             }
         });
-    });
-
-    closeBtn.addEventListener('click', () => {
-        previewContainer.classList.add('hidden');
-    });
+    }
 
 
     //Projects
@@ -211,9 +287,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         projectCardSkills.appendChild(track); //Appends the track to the skills div
 
         cardImg.src = project.image;
-        cardImg.alt = `Screenshot of ${project.name}`;
+        cardImg.alt = `Screenshot of ${project.name} project`;
+        cardImg.loading = 'lazy';
+        cardImg.width = 800;
+        cardImg.height = 600;
 
         cardImg.setAttribute('id', project.name);
+        projectCardImg.setAttribute('role', 'button');
+        projectCardImg.setAttribute('tabindex', '0');
+        projectCardImg.setAttribute('aria-label', `View ${project.name} project`);
 
         projectCardText.appendChild(cardTitle);
         projectCardText.appendChild(cardDesc);
@@ -227,20 +309,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     document.querySelectorAll('.projects__card-imgcontainer').forEach(proj => {
-        proj.addEventListener('click', (e) => {
-            switch (e.target.id) {
+        const openProject = (e) => {
+            const img = proj.querySelector('img');
+            if (!img) return;
+            
+            switch (img.id) {
                 case 'ToDoApp':
-                    window.open("https://harry-todo.netlify.app/");
+                    window.open("https://harry-todo.netlify.app/", "_blank", "noopener,noreferrer");
                     break;
                 case 'DevNest':
-                    window.open("https://devnest-frontend.onrender.com/");
+                    window.open("https://devnest-frontend.onrender.com/", "_blank", "noopener,noreferrer");
                     break;
                 case 'Classic Snake':
-                    window.open("https://harrycw-snake-game.netlify.app/");
+                    window.open("https://harrycw-snake-game.netlify.app/", "_blank", "noopener,noreferrer");
                     break;
             }
-
-        })
+        };
+        
+        proj.addEventListener('click', openProject);
+        
+        // Add keyboard support
+        proj.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openProject(e);
+            }
+        });
     })
 
     const cards = Array.from(projWrapper.querySelectorAll('.projects__card'));
@@ -294,9 +388,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (!prefersReduced.matches) start();
-
-    //Skills
-    const skills = ['JavaScript', 'HTML5', 'CSS3', 'Node.js', 'Express', 'React', 'GitHub', 'PostgreSQL', 'AWS'];
-
 
 });
