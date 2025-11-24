@@ -4,24 +4,61 @@ projects {
     width: 100vw;
 
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
 
     scroll-snap-align: center;
+
+    overflow: hidden;
+}
+
+.projects__cards-wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 50vh;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-inline: 2rem;
+
+  margin-left: 10vw;
+  margin-right: 10vw;
+
+  padding-inline: 2rem;
+  box-sizing: content-box;
+  gap: 1.25rem;
+}
+
+.projects__cards-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.projects__cards-wrapper::-webkit-scrollbar-track {
+    background: #0b1533;
+}
+
+.projects__cards-wrapper::-webkit-scrollbar-thumb {
+  background: #ff3366;                 
+  border-radius: 4px;
+}
+.projects__cards-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #ff6688;                 
 }
 
 .projects__card {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
 
     width: 88%;
     padding-top: 1rem;
     padding-bottom: 1rem;
     border-radius: 10px;
     margin-bottom: 1.5rem;
+    margin-left: 5vw;
+    margin-right: 5vw;
 
     background-color: #c8c8c82c;
     -webkit-backdrop-filter: blur(5px);
@@ -29,6 +66,8 @@ projects {
     box-shadow: 1px 1px 5px 1px #13131354;
     border: 1px solid #e9e9e94f;
 }
+
+
 
 .projects__card-skillcontainer {
     overflow: hidden;

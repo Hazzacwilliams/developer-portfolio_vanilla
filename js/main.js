@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadComponent('home', '.portfolio__container--elements', 'beforeend');
     await loadComponent('aboutme', '.portfolio__container--elements', 'beforeend');
     await loadComponent('projects', '.portfolio__container--elements', 'beforeend');
-    //await loadComponent('skills', '.portfolio__container--elements', 'beforeend');
     await loadComponent('contact', '.portfolio__container--elements', 'beforeend');
 
     //Creates custom cursor
@@ -150,6 +149,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     //Projects
     const projectPage = document.getElementById('projects-section');
+    const projWrapper = document.querySelector('.projects__cards-wrapper');
+
 
     const projects = {
         project1: {
@@ -164,6 +165,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             skills: ['React', 'Redux', 'JavaScript', 'CSS3', 'Component Based Architecture', 'Express.js', 'PostgreSQL', 'GitHub', 'Render'],
             image: './assets/devnest.png'
         },
+        project3: {
+            name: "Classic Snake",
+            description: "The classic game 'Snake', designed to look 8-bit. The app implements canvas, localStorage and game mechanic functions.",
+            skills: ['JavaScript', 'HTML5', 'CSS3', 'Canvas', 'Netlify', 'GitHub'],
+            image: './assets/snakeapp.png'
+        }
     };
 
     Object.values(projects).forEach((project) => {
@@ -216,7 +223,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         projectCard.appendChild(projectCardText);
         projectCard.appendChild(projectCardImg);
 
-        projectPage.appendChild(projectCard);
+        projWrapper.appendChild(projectCard);
     });
 
     document.querySelectorAll('.projects__card-imgcontainer').forEach(proj => {
@@ -228,10 +235,65 @@ document.addEventListener('DOMContentLoaded', async () => {
                 case 'DevNest':
                     window.open("https://devnest-frontend.onrender.com/");
                     break;
+                case 'Classic Snake':
+                    window.open("https://harrycw-snake-game.netlify.app/");
+                    break;
             }
 
         })
     })
+
+    const cards = Array.from(projWrapper.querySelectorAll('.projects__card'));
+
+    const INTERVAL_MS = 3000;
+    const SCROLL_BEHAVIOUR = 'smooth';
+
+    let currentIndex = 0;
+    let timerId = null;
+    let userInteracting = false;
+
+    const io = new IntersectionObserver((entries) => {
+        const visible = entries
+            .filter(e => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) {
+            currentIndex = cards.indexOf(visible.target);
+        }
+    }, { root: projWrapper, threshold: Array.from({ length: 11 }, (_, i) => i / 10) });
+
+    cards.forEach(card => io.observe(card));
+
+    function goTo(index) {
+        const i = (index + cards.length) % cards.length;
+        projWrapper.scrollTo({ left: cards[i].offsetLeft, behavior: SCROLL_BEHAVIOUR });
+        currentIndex = i;
+    }
+
+    function next() {
+        goTo(currentIndex + 1);
+    }
+
+    function start() {
+        if (timerId || userInteracting) return;
+        timerId = setInterval(next, INTERVAL_MS);
+    }
+
+    function stop() {
+        clearInterval(timerId);
+        timerId = null;
+    }
+
+    projWrapper.addEventListener('mouseenter', () => { userInteracting = true; stop(); });
+    projWrapper.addEventListener('mouseleave', () => { userInteracting = false; start(); });
+    projWrapper.addEventListener('touchstart', () => { userInteracting = true; stop(); }, { passive: true });
+    projWrapper.addEventListener('touchend', () => { userInteracting = false; start(); });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stop(); else start();
+    });
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!prefersReduced.matches) start();
 
     //Skills
     const skills = ['JavaScript', 'HTML5', 'CSS3', 'Node.js', 'Express', 'React', 'GitHub', 'PostgreSQL', 'AWS'];
