@@ -35,6 +35,12 @@
     line-height: 40px;
     position: relative;
     text-align: center;
+
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    margin-bottom: 5px;
 }
 
 #para1 {
